@@ -1,0 +1,17 @@
+{
+  "name": "injector",
+  "version": "0.0.1",
+  "description": "Dependency Injector for ES6 with scoped proxies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "di",
+    "injection",
+    "dependency",
+    "proxy"
+  ],
+  "author": "mjeffery",
+  "license": "MIT"
+}
