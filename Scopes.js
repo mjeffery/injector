@@ -1,5 +1,4 @@
 let Zone = require('zone.js');
-let _ = require('lodash');
 let injector = require('./injector');
 
 let _currentScopes = new Scopes(Zone.current);
@@ -15,13 +14,21 @@ Object.defineProperty(Scopes, current, {
 });
 
 Scopes.prototype.bind = function( bindings ) {
-	let properties = _.map( bindings, (host, scopeName) => {
+	let properties = {};
+	for([host, scopeName] of bindings) { 		
 		//TODO get a conversation id for host object
-	});
+		properties[scopeName] = null;
+	};
 
 	return new Scopes( this._zone.fork({ properties }) );
 };
 
+Scopes.prototype.unbind = function( bindings ) {
+	
+	return new Scopes( this._zone.fork({  }) );
+}
+
+//TODO is this a good idea even?
 Scopes.prototype.wrap = function( callback ) {
 	if( typeof callback !== 'function' )
 		throw new Error('Expecting function, got: ' + callback);
