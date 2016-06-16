@@ -1,5 +1,10 @@
-let Zone = require('zone.js');
-let symbols = require('./symbols');
+const Zone = require('zone.js');
+
+const symbols = require('./symbols');
+const ScopeBinding = require('./ScopeBinding');
+
+
+const isActiveBinding = b => b instanceof ScopeBinding && b.isActive;
 
 class ScopedProxy {
 	constructor(scope, name, factory) {
@@ -7,13 +12,12 @@ class ScopedProxy {
 			get(target, trapName, receiver) {
 				return function(proxy, ...args) {
 					let bindings = Zone.current.get(symbols.scopeBindings) || {},
-						bindingId = bindings[scope];
+						binding = bindings[scope];
 
-					if(!bindingId)  {
-						//
-					}
+					if( !isActiveBinding(binding) )
+						throw Error('')
 					 
-					let instance = scope[symbols.getInstance](bindingId, name, factory); 
+					let instance = scope[symbols.getInstance](binding.id, name, factory); 
 
 					return Reflect[trapName](instance, ..args);
 				}

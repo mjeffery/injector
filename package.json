@@ -13,5 +13,9 @@
     "proxy"
   ],
   "author": "mjeffery",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "zone.js": "^0.6.12"
+  }
 }

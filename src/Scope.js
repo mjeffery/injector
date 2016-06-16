@@ -1,4 +1,5 @@
 let symbols = require('./symbols');
+let ScopeBinding = require('./ScopeBinding');
 
 class Scope {
 	constructor(name) {
@@ -29,7 +30,7 @@ class Scope {
 
 		hosts.set(key, host);
 
-		return key;
+		return new ScopeBinding(key);
 	}
 }
 

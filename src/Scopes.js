@@ -1,4 +1,7 @@
 let Zone = require('zone.js');
+let _ = require('lodash');
+
+let symbols = require('./symbols');
 let injector = require('./injector');
 
 let _currentScopes = new Scopes(Zone.current);
@@ -13,12 +16,14 @@ Object.defineProperty(Scopes, current, {
 	configurable: true
 });
 
-Scopes.prototype.bind = function( bindings ) {
-	let properties = {};
-	for([host, scopeName] of bindings) { 		
-		//TODO get a conversation id for host object
-		properties[scopeName] = null;
-	};
+Scopes.prototype.bind = function( config ) {
+	let bindings = _.mapValues( config, (host, scope) =>
+			if(!_.isObject(host)) throw new Error('');	
+			return injector.scope(scope)[symbols.bindScope](host)		
+		),
+		properties =  {
+			[symbols.scopeBindingStore]: bindings
+		}
 
 	return new Scopes( this._zone.fork({ properties }) );
 };

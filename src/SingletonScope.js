@@ -1,4 +1,4 @@
-let symbols = require('./symbols');
+const symbols = require('./symbols');
 
 class SingletonScope {
 
